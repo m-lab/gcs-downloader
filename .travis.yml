@@ -8,11 +8,9 @@ before_install:
 - go get github.com/mattn/goveralls
 - go get github.com/wadey/gocovmerge
 
+script:
 # Install test credentials.
 - echo $SERVICE_ACCOUNT_mlab_testing > travis-testing.json
-- gcloud auth activate-service-account --key-file=travis-testing.json
-
-script:
 - export GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/travis-testing.json
 
 # Run every unit test.

@@ -6,7 +6,6 @@ dist: xenial
 before_install:
 # Coverage tools
 - go get github.com/mattn/goveralls
-- go get github.com/wadey/gocovmerge
 
 script:
 # Install test credentials.

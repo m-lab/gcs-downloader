@@ -36,6 +36,10 @@ func Test_main(t *testing.T) {
 			source:     "gs://m-lab-gcs-downloader-mlab-testing/t1/okay.txt",
 			atomicFile: fakeNew(path.Join(dir, "junk"), fmt.Errorf("fake temp file create failed")),
 		},
+		{
+			name:   "error-log",
+			source: "gs://this-bucket-does-not-exist/okay.txt",
+		},
 	}
 
 	for _, tt := range tests {

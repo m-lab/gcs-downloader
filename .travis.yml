@@ -1,0 +1,20 @@
+# Travis configuration for gcs-downloader.
+
+language: go
+dist: xenial
+
+before_install:
+# Coverage tools
+- go get github.com/mattn/goveralls
+
+script:
+# Install test credentials.
+- echo $SERVICE_ACCOUNT_mlab_testing > travis-testing.json
+- export GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/travis-testing.json
+
+# Run every unit test.
+- go test -v -covermode=count -coverprofile=__coverage.cov -coverpkg=./... ./...
+
+# Upload coverage to coveralls.
+- $HOME/gopath/bin/goveralls -coverprofile=__coverage.cov -service=travis-ci
+

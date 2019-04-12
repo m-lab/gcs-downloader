@@ -21,6 +21,7 @@ func Test_main(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	defer os.RemoveAll(dir)
 	tests := []struct {
 		name       string
 		source     string

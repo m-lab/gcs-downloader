@@ -22,26 +22,26 @@ func Test_main(t *testing.T) {
 		t.Fatal(err)
 	}
 	tests := []struct {
-		name     string
-		source   string
-		tempFile atomicfile.File
+		name       string
+		source     string
+		atomicFile atomicfile.File
 	}{
 		{
-			name:     "ok",
-			source:   "gs://m-lab-gcs-downloader-mlab-testing/t1/okay.txt",
-			tempFile: atomicfile.New(path.Join(dir, "junk")),
+			name:       "ok",
+			source:     "gs://m-lab-gcs-downloader-mlab-testing/t1/okay.txt",
+			atomicFile: atomicfile.New(path.Join(dir, "junk")),
 		},
 		{
-			name:     "error",
-			source:   "gs://m-lab-gcs-downloader-mlab-testing/t1/okay.txt",
-			tempFile: fakeNew(path.Join(dir, "junk"), fmt.Errorf("fake temp file create failed")),
+			name:       "error",
+			source:     "gs://m-lab-gcs-downloader-mlab-testing/t1/okay.txt",
+			atomicFile: fakeNew(path.Join(dir, "junk"), fmt.Errorf("fake temp file create failed")),
 		},
 	}
 
 	for _, tt := range tests {
 		once = true // Only run once.
 		source = tt.source
-		atomicfileNew = func(name string) atomicfile.File { return tt.tempFile }
+		atomicfileNew = func(name string) atomicfile.File { return tt.atomicFile }
 		t.Run(tt.name, func(t *testing.T) {
 			main()
 		})

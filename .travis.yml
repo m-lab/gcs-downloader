@@ -9,7 +9,7 @@ before_install:
 
 script:
 # Install test credentials.
-- echo "$SERVICE_ACCOUNT_mlab_testing" > travis-testing.json
+- echo "$SERVICE_ACCOUNT_mlab_testing" | base64 -d > travis-testing.json
 - export GOOGLE_APPLICATION_CREDENTIALS=$TRAVIS_BUILD_DIR/travis-testing.json
 
 # Run every unit test.

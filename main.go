@@ -36,14 +36,14 @@ func init() {
 	flag.BoolVar(&once, "once", false, "Download the source only once and then exit.")
 }
 
-var tempNew = atomicfile.New
+var atomicfileNew = atomicfile.New
 
 func run(ctx context.Context, bucket storagex.Bucket, prefix string) error {
 	return memoryless.Run(ctx, func() {
 		ctx, cancel := context.WithTimeout(ctx, 2*period)
 		defer cancel()
 		bucket.Walk(ctx, prefix, func(o *storagex.Object) error {
-			err := atomicfile.SaveFile(ctx, o, tempNew(path.Join(output, o.LocalName())))
+			err := atomicfile.SaveFile(ctx, o, atomicfileNew(path.Join(output, o.LocalName())))
 			if err != nil {
 				log.Println(err)
 			}

@@ -1,5 +1,5 @@
-// Package temp defines file operations for safely writing files.
-package temp
+// Package atomicfile defines file operations for safely writing files.
+package atomicfile
 
 import (
 	"context"

@@ -1,4 +1,4 @@
-package temp_test
+package atomicfile_test
 
 import (
 	"bytes"
@@ -11,7 +11,7 @@ import (
 	"testing"
 
 	"github.com/dchest/safefile"
-	"github.com/m-lab/gcs-downloader/temp"
+	"github.com/m-lab/gcs-downloader/atomicfile"
 )
 
 func init() {
@@ -19,7 +19,7 @@ func init() {
 }
 
 func TestNew(t *testing.T) {
-	tmp := temp.New("test1")
+	tmp := atomicfile.New("test1")
 	_, err := tmp.Create(os.ModePerm)
 	if err != nil {
 		t.Fatal(err)
@@ -37,7 +37,7 @@ type fakeTemp struct {
 	commitError error
 }
 
-func fakeFile(name string, createError, commitError error) temp.File {
+func fakeFile(name string, createError, commitError error) atomicfile.File {
 	return &fakeTemp{name: name, createError: createError, commitError: commitError}
 }
 
@@ -77,8 +77,8 @@ func (f *fakeObj) Copy(ctx context.Context, w io.Writer) error {
 func TestSaveFile(t *testing.T) {
 	tests := []struct {
 		name    string
-		o       temp.Object
-		t       temp.File
+		o       atomicfile.Object
+		t       atomicfile.File
 		mkdir   bool
 		wantErr bool
 	}{
@@ -123,7 +123,7 @@ func TestSaveFile(t *testing.T) {
 
 		t.Run(tt.name, func(t *testing.T) {
 			ctx := context.Background()
-			if err := temp.SaveFile(ctx, tt.o, tt.t); (err != nil) != tt.wantErr {
+			if err := atomicfile.SaveFile(ctx, tt.o, tt.t); (err != nil) != tt.wantErr {
 				t.Errorf("SaveFile() error = %v, wantErr %v", err, tt.wantErr)
 			}
 		})
